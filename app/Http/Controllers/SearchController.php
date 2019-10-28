@@ -18,12 +18,12 @@ class SearchController extends Controller
     /**
      * @return [type]
      */
-    public function index(Request $request)
+    public function index(Request $request, $pattern = null)
     {
-    	//$find = $this->pokemonService->find('nido');dd(__METHOD__,$find);
-    	$one = $this->pokemonService->retrieve(1);dd($one);
-
-    	return view('pokemon.search',[]);
+    	//FIX add validations: $pattern<required>
+		$searchResults = (empty($pattern)) ? $this->pokemonService->all() : $this->pokemonService->find($pattern);
+    	//FIXME eval request content-type header
+    	return response()->json($searchResults,200);
     }
 
     /**
@@ -32,6 +32,8 @@ class SearchController extends Controller
      */
     public function search(Request $request, $pattern)
     {
-    	return view('pokemon.search',['searchResults'=>['a','b','c']]);
+    	//FIXME eval request content-type header
+    	//return response()->view('pokemon.search',['searchResults'=>$this->pokemonService->find($pattern)],200);
+    	return response()->json($this->pokemonService->find($pattern),200);
     }
 }

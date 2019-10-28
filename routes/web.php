@@ -16,4 +16,5 @@ Route::get('/', function () {
 });
 
 Route::get('/pokemon', 'SearchController@index');
+Route::get('/pokemon/{pattern?}', 'SearchController@index');
 Route::post('/pokemon', 'SearchController@search');
